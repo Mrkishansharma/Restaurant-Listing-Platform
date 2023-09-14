@@ -4,17 +4,17 @@ const {Router} = require('express');
 const restaurantRouter = Router();
 
 const {
-    getRestaurants,
     getRestaurant,
+    getRestaurantById,
     addNewRestaurant,
     updateRestaurant,
     deleteRestaurant
 } = require('../controllers/restaurant');
 
 
-restaurantRouter.get('/', getRestaurants);
+restaurantRouter.get('/', getRestaurant);
 
-restaurantRouter.get('/:id', getRestaurant);
+restaurantRouter.get('/:id', getRestaurantById);
 
 restaurantRouter.post('/', addNewRestaurant);
 
