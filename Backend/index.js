@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 
+console.log(process.env.PR)
 
 app.get('/', (req, res) => {
     res.status(200).send({
