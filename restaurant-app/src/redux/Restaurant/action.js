@@ -53,7 +53,9 @@ export const getRestaurant = (payload) => (dispatch) => {
         url: process.env.REACT_APP_BASE_URL,
         params: payload
     }).then((res) => {
-        dispatch(getRestaurantAction(res.data));
+        const totalCount = res.headers.get('X-Total-Count');
+
+        dispatch(getRestaurantAction({ data: res.data, totalCount }));
     }).catch(err => {
         dispatch(restaurantErrorAction(err));
     })
@@ -69,8 +71,8 @@ export const postRestaurant = (payload) => (dispatch) => {
         url: process.env.REACT_APP_BASE_URL,
         data: payload
     }).then((res) => {
+        console.log(res);
         dispatch(addRestaurantAction(res.data));
-        alert('successfull')
     }).catch(err => {
         dispatch(restaurantErrorAction(err));
     })
@@ -88,7 +90,6 @@ export const updateRestaurant = (id, payload) => (dispatch) => {
         data: payload
     }).then((res) => {
         updateRestaurantAction({ id: id, ...payload });
-        alert('updated');
     }).catch(err => {
         dispatch(restaurantErrorAction(err));
     })

@@ -46,11 +46,11 @@ function Row(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  function handleEditRestaurant(id){
+  function handleEditRestaurant(id) {
     console.log(id);
     navigate(`/Edit-Restaurant/${id}`)
   }
-  function handleDeleteRestaurant(id){
+  function handleDeleteRestaurant(id) {
     console.log(id);
     dispatch(deleteRestaurant(id))
     dispatch(getRestaurant())
@@ -115,20 +115,37 @@ function Row(props) {
 
 
 export default function Restaurant() {
-  const [page, setPage] = React.useState(2);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [searchParams, setsearchParams] = useSearchParams();
+  const [page, setPage] = React.useState(+searchParams.getAll("page") || 0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(+searchParams.getAll("limit") || 10);
+
   const [rows, setRows] = React.useState([])
+
   const dispatch = useDispatch()
-  const [searchParams] = useSearchParams()
 
   const restaurants = useSelector((state) => state.restaurant.restaurant);
+  const totalCount = useSelector((state) => state.restaurant.totalCount);
 
-  const params = {}
-  if (searchParams.getAll('search')) {
-    params.search = searchParams.getAll('search')
-  }
+
 
   React.useEffect(() => {
+    const params = new URLSearchParams();
+    params.append('page', page);
+    params.append('limit', rowsPerPage);
+    setsearchParams(params);
+  }, [page, rowsPerPage])
+
+  React.useEffect(() => {
+    const params = {}
+    if (searchParams.getAll('search')) {
+      params.search = searchParams.getAll('search')
+    }
+    if(page){
+      params.page = +searchParams.getAll('page') || page
+    }
+    if(rowsPerPage){
+      params.limit = +searchParams.getAll('limit') || rowsPerPage;
+    }
     dispatch(getRestaurant(params))
   }, [searchParams])
 
@@ -141,6 +158,7 @@ export default function Restaurant() {
   }, [restaurants])
 
   const handleChangePage = (event, newPage) => {
+    console.log(newPage);
     setPage(newPage);
   };
 
@@ -172,10 +190,10 @@ export default function Restaurant() {
       </TableContainer>
       <TablePagination
         component="div"
-        count={100}
-        page={page}
+        count={+totalCount}
+        page={+page}
         onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={+rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </>

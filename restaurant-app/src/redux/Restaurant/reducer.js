@@ -4,7 +4,8 @@ const initialState = {
     restaurant: [],
     isLoading: false,
     isError: false,
-    error: ''
+    error: '',
+    totalCount : 0
 }
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -33,7 +34,8 @@ export const reducer = (state = initialState, { type, payload }) => {
                 isLoading: false,
                 isError: false,
                 error: '',
-                restaurant: payload
+                restaurant: payload.data,
+                totalCount: +payload.totalCount
             }
         }
 
@@ -53,16 +55,16 @@ export const reducer = (state = initialState, { type, payload }) => {
                 isLoading: false,
                 isError: false,
                 error: '',
-                restaurant: state.restaurant.map((item)=>{
-                    if(item.id !== payload.id){
+                restaurant: state.restaurant.map((item) => {
+                    if (item.id !== payload.id) {
                         return item
                     }
-                    return {...item, ...payload}
+                    return { ...item, ...payload }
                 })
             }
         }
 
-        case DELETE_RESTAURANT : {
+        case DELETE_RESTAURANT: {
             return {
                 ...state,
                 isLoading: false,
@@ -71,7 +73,7 @@ export const reducer = (state = initialState, { type, payload }) => {
                 restaurant: state.restaurant.filter(item => item.id !== payload)
             }
         }
-        
+
 
         default:
             return state

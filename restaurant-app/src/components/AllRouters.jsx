@@ -8,6 +8,7 @@ function AllRouters() {
     return (
         <>
             <Routes>
+                <Route path='/' element={<Home />} />
                 <Route path='/Home' element={<Home />} />
                 <Route path='/Restaurants' element={<Restaurant />} />
                 <Route path='/Add-Restaurant' element={<AddRestaurant />} />

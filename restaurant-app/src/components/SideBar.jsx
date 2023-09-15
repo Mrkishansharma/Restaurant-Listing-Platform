@@ -16,10 +16,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { NavLink, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import AllRouters from './AllRouters';
+
+import HomeIcon from '@mui/icons-material/Home';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import ViewListIcon from '@mui/icons-material/ViewList';
 
 // import AppBar from '@mui/material/AppBar';
 import InputBase from '@mui/material/InputBase';
@@ -141,7 +143,7 @@ export default function SideBar() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [searchParams, setsearchParams] = useSearchParams()
-    const [searchInput, setSearchInput] = React.useState(searchParams.getAll('search') || '')
+    const [searchInput, setSearchInput] = React.useState(searchParams.getAll("search") || '')
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -152,13 +154,13 @@ export default function SideBar() {
         setsearchParams(params);
     }, [searchInput])
 
-    React.useEffect(()=>{
-        if(location.pathname !== "/Restaurants"){
-           setSearchInput("")
+    React.useEffect(() => {
+        if (location.pathname !== "/Restaurants") {
+            setSearchInput("")
         }
-    },[location])
+    }, [location])
 
-    
+
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -166,6 +168,16 @@ export default function SideBar() {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+    const Activestyle = {
+        fontWeight: '2000',
+        color: '#007bff',
+        textDecoration: 'none'
+    };
+
+    const defaultstyle = {
+        textDecoration: 'none',
+        color: 'black',
     };
 
     return (
@@ -198,7 +210,7 @@ export default function SideBar() {
                             value={searchInput}
                             onChange={(e) => {
                                 setSearchInput(e.target.value)
-                                if(location.pathname !== "/Restaurants"){
+                                if (location.pathname !== "/Restaurants") {
                                     navigate("/Restaurants")
                                 }
                             }}
@@ -215,8 +227,14 @@ export default function SideBar() {
                 <Divider />
                 <List>
                     {['Home', 'Restaurants', 'Add-Restaurant'].map((text, index) => (
-                        <NavLink to={`/${text}`}>
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                        <NavLink to={`/${text}`}
+                            key={index}
+                            style={({ isActive }) => {
+                                return isActive ? Activestyle : defaultstyle
+                            }
+                            }
+                        >
+                            <ListItem disablePadding sx={{ display: 'block' }}>
                                 <ListItemButton
                                     sx={{
                                         minHeight: 48,
@@ -231,7 +249,7 @@ export default function SideBar() {
                                             justifyContent: 'center',
                                         }}
                                     >
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                        {index === 0 ? <HomeIcon /> : index === 1 ? <RestaurantIcon /> : <ViewListIcon />}
                                     </ListItemIcon>
                                     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                                 </ListItemButton>
@@ -247,6 +265,6 @@ export default function SideBar() {
                 <AllRouters />
 
             </Box>
-        </Box>
+        </Box >
     );
 }

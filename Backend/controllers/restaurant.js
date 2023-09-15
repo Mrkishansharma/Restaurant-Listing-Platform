@@ -16,7 +16,7 @@ const getRestaurant = async (req, res) => {
                 [Op.or]: [
                     { name: { [Op.like]: `%${search}%` } },
                     { address: { [Op.like]: `%${search}%` } },
-                    { contact: { [Op.like]: `%${search}%` } },
+                    { contact: { [Op.like]: `%${search}%` } }
                 ],
             };
         }
@@ -35,6 +35,11 @@ const getRestaurant = async (req, res) => {
             filterObject.limit = parseInt(limit);
 
         }
+
+        const totalCount = await Restaurant.count(filterObject.where);
+
+        res.append('X-Total-Count', totalCount);
+        res.append('Access-Control-Expose-Headers', 'X-Total-Count');
 
         const restaurants = await Restaurant.findAll(filterObject);
 

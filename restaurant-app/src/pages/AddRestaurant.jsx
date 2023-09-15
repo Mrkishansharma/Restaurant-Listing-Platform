@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { postRestaurant, updateRestaurant } from '../redux/Restaurant/action';
 import { useParams } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
     return (
@@ -44,6 +45,8 @@ export default function AddRestaurant() {
 
     const restaurantsData = useSelector((state) => state.restaurant.restaurant);
 
+    const [isDone, setIsDone] = React.useState(false);
+
 
     const dispatch = useDispatch()
 
@@ -68,6 +71,10 @@ export default function AddRestaurant() {
             dispatch(postRestaurant(restaurant))
             setRestaurant(initialState)
         }
+        setIsDone(true)
+        setTimeout(()=>{
+            setIsDone(false)
+        },3000)
     };
 
     const handleChange = (e) => {
@@ -77,6 +84,11 @@ export default function AddRestaurant() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+            {isDone && 
+            <Alert severity="success" color="info">
+                Successfully done !
+            </Alert>
+            }
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -158,6 +170,7 @@ export default function AddRestaurant() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
+
         </ThemeProvider>
     );
 }
