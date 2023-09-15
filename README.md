@@ -79,13 +79,23 @@ The Restaurant Listing App is a web application built to manage and display info
 
 ### Home Page
 
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/7a8fbaec-c933-40a2-bf3f-ef2677989bd9)
 
 
 ### Add New Restaurant Page
 
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/a41daa00-af2c-45d7-a068-6b68b5b9083e)
 
 
 ### Restaurant Page
+
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/5de73d65-a89a-4dff-bba0-afc18b033ee4)
+
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/ab133d19-e669-41f0-9b0e-a8ad63316173)
+
+### Edit Restaurant Page
+
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/bff109ed-c12b-4c9f-9157-162e40aeb2c1)
 
 
 
