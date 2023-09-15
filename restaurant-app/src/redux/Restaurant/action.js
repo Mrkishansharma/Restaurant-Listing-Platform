@@ -88,6 +88,7 @@ export const updateRestaurant = (id, payload) => (dispatch) => {
         data: payload
     }).then((res) => {
         updateRestaurantAction({ id: id, ...payload });
+        alert('updated');
     }).catch(err => {
         dispatch(restaurantErrorAction(err));
     })

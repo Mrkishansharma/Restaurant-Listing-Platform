@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import AllRouters from './AllRouters';
 
 // import AppBar from '@mui/material/AppBar';
@@ -143,13 +143,22 @@ export default function SideBar() {
     const [searchParams, setsearchParams] = useSearchParams()
     const [searchInput, setSearchInput] = React.useState(searchParams.getAll('search') || '')
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
     React.useEffect(() => {
         const params = new URLSearchParams();
         params.append('search', searchInput);
         setsearchParams(params);
     }, [searchInput])
 
+    React.useEffect(()=>{
+        if(location.pathname !== "/Restaurants"){
+           setSearchInput("")
+        }
+    },[location])
 
+    
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -187,7 +196,12 @@ export default function SideBar() {
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                             value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
+                            onChange={(e) => {
+                                setSearchInput(e.target.value)
+                                if(location.pathname !== "/Restaurants"){
+                                    navigate("/Restaurants")
+                                }
+                            }}
                         />
                     </Search>
                 </Toolbar>

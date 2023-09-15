@@ -1,19 +1,14 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
-import { postRestaurant } from '../redux/Restaurant/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { postRestaurant, updateRestaurant } from '../redux/Restaurant/action';
 import { useParams } from 'react-router-dom';
 
 function Copyright(props) {
@@ -44,21 +39,40 @@ export default function AddRestaurant() {
     }
 
     const [restaurant, setRestaurant] = React.useState(initialState);
+
+    const { id: restaurantId } = useParams()
+
+    const restaurantsData = useSelector((state) => state.restaurant.restaurant);
+
+
     const dispatch = useDispatch()
-    const parmas = useParams()
 
-    console.log(parmas);
 
-    const {name, address, contact, email, description} = restaurant
+    React.useEffect(() => {
+        if (restaurantId) {
+            const data = restaurantsData.find((item) => +(item.id) === (+restaurantId));
+            setRestaurant(data)
+        } else {
+            setRestaurant(initialState)
+        }
+    }, [restaurantId])
+
+    const { name, address, contact, email, description } = restaurant;
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(postRestaurant(restaurant))
+        if (restaurantId) {
+            dispatch(updateRestaurant(restaurantId, restaurant))
+        } else {
+            dispatch(postRestaurant(restaurant))
+            setRestaurant(initialState)
+        }
     };
 
     const handleChange = (e) => {
-        const {value, name} = e.target
-        setRestaurant({...restaurant, [name]: value})
+        const { value, name } = e.target
+        setRestaurant({ ...restaurant, [name]: value })
     }
 
     return (
@@ -75,9 +89,9 @@ export default function AddRestaurant() {
                 >
 
                     <Typography component="h1" variant="h5">
-                        Add New Restaurant
+                        {restaurantId ? "Update Existing Restaurant" : "Add New Restaurant"}
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
@@ -137,9 +151,9 @@ export default function AddRestaurant() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            ADD RESTAURANT
+                            {restaurantId ? "UPDATE RESTAURANT" : "ADD RESTAURANT"}
                         </Button>
-                        
+
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />

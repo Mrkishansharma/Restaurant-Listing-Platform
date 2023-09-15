@@ -119,7 +119,7 @@ export default function Restaurant() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([])
   const dispatch = useDispatch()
-  const [searchParams, setsearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
 
   const restaurants = useSelector((state) => state.restaurant.restaurant);
 
