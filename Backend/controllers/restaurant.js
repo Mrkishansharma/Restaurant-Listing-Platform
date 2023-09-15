@@ -64,7 +64,7 @@ const getRestaurantById = async (req, res) => {
 const addNewRestaurant = async (req, res) => {
     try {
         const restaurant = await Restaurant.create(req.body);
-        res.status(201).json({ restaurant });
+        res.status(201).json(restaurant);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: error.message });
@@ -74,10 +74,10 @@ const addNewRestaurant = async (req, res) => {
 const updateRestaurant = async (req, res) => {
     const { id } = req.params;
     try {
-        const [updated] = await Restaurant.update(req.body, {
+        const [isUpdated] = await Restaurant.update(req.body, {
             where: { id },
         });
-        if (updated) {
+        if (isUpdated) {
             res.status(200).json({ message: 'Restaurant has been updated successfully.' });
         } else {
             res.status(404).json({ error: 'Restaurant not found.' });
