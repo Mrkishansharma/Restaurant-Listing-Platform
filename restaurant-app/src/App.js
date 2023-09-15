@@ -1,10 +1,10 @@
 
-import Button from '@mui/material/Button';
+import SideBar from './components/SideBar';
 
 function App() {
   return (
     <div className="App">
-      <Button variant="contained">Contained</Button>
+      <SideBar />
     </div>
   );
 }
