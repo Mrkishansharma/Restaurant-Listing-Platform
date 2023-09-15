@@ -44,13 +44,14 @@ const deleteRestaurantAction = (restaurant) => {
 }
 
 
-export const getRestaurant = (dispatch) => {
+export const getRestaurant = (payload) => (dispatch) => {
 
     dispatch(restaurantRequestAction());
 
-    axios({
+    return axios({
         method: 'GET',
         url: process.env.REACT_APP_BASE_URL,
+        params: payload
     }).then((res) => {
         dispatch(getRestaurantAction(res.data));
     }).catch(err => {
@@ -69,6 +70,7 @@ export const postRestaurant = (payload) => (dispatch) => {
         data: payload
     }).then((res) => {
         dispatch(addRestaurantAction(res.data));
+        alert('successfull')
     }).catch(err => {
         dispatch(restaurantErrorAction(err));
     })
