@@ -14,7 +14,7 @@ export default function Restaurant() {
 
   const [searchParams, setsearchParams] = useSearchParams();
   const [page, setPage] = React.useState(+searchParams.getAll("page") || 1);
-  const [limit] = React.useState(+searchParams.getAll("limit") || 8);
+  const [limit] = React.useState(+searchParams.getAll("limit") || 9);
   const [searchInput, setSearchInput] = React.useState(searchParams.getAll("search") || '')
 
   const dispatch = useDispatch()
@@ -46,7 +46,6 @@ export default function Restaurant() {
 
 
   const handlePageChange = (event, newPage) => {
-    console.log(newPage);
     setPage(newPage);
   };
 

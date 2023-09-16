@@ -5,20 +5,24 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import SearchRestaurant from '../components/SearchRestaurant';
+import SelectRestaurant from '../components/SelectRestaurant';
+import AddRestaurant from './AddRestaurant';
 
 const steps = ['Select Restaurant', 'Update Restaurant'];
 
-export default function CustomStepper() {
+export default function EditRestaurant() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [restaurantName, setRestaurantName] = React.useState('');
-
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
+  const [selectedRestaurentId, SetSelectedRestaurentId] = React.useState(null);
 
 
+  const handleSelectedRestaurentId = (id) => {
+    SetSelectedRestaurentId(id);
+  }
+
+  const goToStepZero = () => {
+    SetSelectedRestaurentId(null);
+    setActiveStep(0);
+  }
 
   const handleNext = () => {
 
@@ -26,18 +30,17 @@ export default function CustomStepper() {
   };
 
   const handleBack = () => {
+    SetSelectedRestaurentId(null)
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
 
 
   const handleReset = () => {
+    SetSelectedRestaurentId(null)
     setActiveStep(0);
   };
 
-  const handleNameChange = (event) => {
-    setRestaurantName(event.target.value);
-  };
 
   return (
     <Box
@@ -50,8 +53,8 @@ export default function CustomStepper() {
         marginTop: '10px'
       }}
     >
-      <Box sx={{ width: '60%', mt: 7 }}>
-        <Stepper activeStep={activeStep}>
+      <Box sx={{ width: '100%', mt: 7 }}>
+        <Stepper activeStep={activeStep} sx={{ width: { xs: '100%', md: '50%'}, margin: 'auto' }}>
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
@@ -64,25 +67,29 @@ export default function CustomStepper() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              Successfully Updated
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, width: '40%', margin: 'auto', mb: 5 }}>
+              <Typography sx={{ mt: 2, mb: 1, marigin: 'auto' }}>
+                All Done 😎
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, width: '40%', margin: 'auto', mb: 5 }}>
               <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleReset}>Reset</Button>
+              <Button onClick={handleReset} variant="contained">Reset</Button>
             </Box>
           </React.Fragment>
         ) : (
           <React.Fragment>
+            {/* Select Restaurant componenets Called  */}
             {activeStep === 0 && (
-
-              <SearchRestaurant handleNameChange={handleNameChange} restaurantName={restaurantName} />
+              <SelectRestaurant selectIdProps={{ selectedRestaurentId, handleSelectedRestaurentId }} goToStepZero={goToStepZero} />
             )}
 
-            {activeStep === 1 && <UpdateRestaurant />} {/* Display UpdateRestaurant component in step 1 */}
+            {activeStep === 1 && <AddRestaurant selectedRestaurentId={selectedRestaurentId} goToStepZero={goToStepZero} />}
+            {/* Display UpdateRestaurant component in step 1 */}
 
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, width: '40%', margin: 'auto', mb: 5 }} >
               <Button
+                variant="contained"
                 color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
@@ -92,10 +99,12 @@ export default function CustomStepper() {
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
 
-
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Update Restaurant' : 'Next'}
-              </Button>
+              {
+                selectedRestaurentId &&
+                <Button onClick={handleNext} variant="contained">
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              }
             </Box>
           </React.Fragment>
         )}
@@ -104,12 +113,3 @@ export default function CustomStepper() {
   );
 }
 
-// Define your UpdateRestaurant component separately
-function UpdateRestaurant() {
-  // Your UpdateRestaurant component content here
-  return (
-    <div>
-      {/* Add your UpdateRestaurant component content here */}
-    </div>
-  );
-}

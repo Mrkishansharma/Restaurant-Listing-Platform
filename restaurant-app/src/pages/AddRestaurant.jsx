@@ -2,34 +2,20 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { postRestaurant, updateRestaurant } from '../redux/Restaurant/action';
-import { useParams } from 'react-router-dom';
+import { deleteRestaurant, postRestaurant, updateRestaurant } from '../redux/Restaurant/action';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Restaurant App
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function AddRestaurant() {
+export default function AddRestaurant({ goToStepZero,selectedRestaurentId: restaurantId }) {
 
     const initialState = {
         name: '',
@@ -40,13 +26,13 @@ export default function AddRestaurant() {
 
     const [restaurant, setRestaurant] = React.useState(initialState);
 
-    const { id: restaurantId } = useParams()
-
     const restaurantsData = useSelector((state) => state.restaurant.restaurant);
 
     const [isDone, setIsDone] = React.useState(false);
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
 
     React.useEffect(() => {
@@ -58,6 +44,11 @@ export default function AddRestaurant() {
             setRestaurant(initialState)
         }
     }, [restaurantId])
+
+    const handleDeleteRestaurant = () => {
+        dispatch(deleteRestaurant(restaurantId))
+        goToStepZero()
+    }
 
     const { name, address, contact, image } = restaurant;
 
@@ -71,9 +62,9 @@ export default function AddRestaurant() {
             setRestaurant(initialState)
         }
         setIsDone(true)
-        setTimeout(()=>{
+        setTimeout(() => {
             setIsDone(false)
-        },3000)
+        }, 3000)
     };
 
     const handleChange = (e) => {
@@ -83,10 +74,10 @@ export default function AddRestaurant() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            {isDone && 
-            <Alert severity="success" color="info">
-                Successfully done !
-            </Alert>
+            {isDone &&
+                <Alert severity="success" color="info">
+                    Successfully done !
+                </Alert>
             }
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -133,7 +124,7 @@ export default function AddRestaurant() {
                             autoComplete="contact"
                             value={contact}
                             onChange={handleChange}
-                            
+
                         />
                         <TextField
                             margin="normal"
@@ -156,6 +147,21 @@ export default function AddRestaurant() {
                         </Button>
 
                     </Box>
+                    {
+                        restaurantId && 
+                        <Box>
+                            <Button
+                                fullWidth
+                                variant="outlined" 
+                                color="error"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={handleDeleteRestaurant}
+                            >
+                                Delete Restaurant
+                            </Button>
+                        </Box>
+
+                    }
                 </Box>
             </Container>
 

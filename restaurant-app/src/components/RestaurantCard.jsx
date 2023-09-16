@@ -5,9 +5,15 @@ import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 
 import React from 'react'
 
-function RestaurantCard({ restaurant }) {
+function RestaurantCard({ restaurant, onClick, isSelected }) {
     return (
-        <Card sx={{ maxWidth: 300 }}>
+        <Card sx={{
+            maxWidth: 300,
+            backgroundColor: isSelected ? '#ffdeef' : 'white',
+            border: isSelected ? '2px solid black' : 'none',
+            cursor: 'pointer'
+        }}
+            onClick={onClick} >
             <CardMedia
                 sx={{ height: 140 }}
                 image={restaurant.image}
