@@ -79,24 +79,31 @@ The Restaurant Listing App is a web application built to manage and display info
 
 ### Home Page
 
-![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/7a8fbaec-c933-40a2-bf3f-ef2677989bd9)
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/3eae9d7f-b5ee-47a9-afc4-ac796cb79f8e)
+
 
 
 ### Add New Restaurant Page
 
-![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/a41daa00-af2c-45d7-a068-6b68b5b9083e)
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/c8d8ea41-8079-4c3b-b618-c18f4d2b37a2)
 
 
 ### Restaurant Page
 
-![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/5de73d65-a89a-4dff-bba0-afc18b033ee4)
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/e1bd9882-e821-4418-9880-130274a30e17)
 
-![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/ab133d19-e669-41f0-9b0e-a8ad63316173)
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/e24c223a-dc73-4413-8848-09c55b71af02)
+
 
 ### Edit Restaurant Page
 
-![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/bff109ed-c12b-4c9f-9157-162e40aeb2c1)
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/6e2536ce-1a24-4ab0-b4ce-c85a8fe12b6d)
 
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/69c09333-6b4c-4a6a-a55a-06c2527c9e92)
+
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/43a9c4e4-355d-4185-9921-c900dafb4349)
+
+![image](https://github.com/Mrkishansharma/Restaurant-Listing-Platform/assets/89073918/766837c5-0580-40d0-ad3a-6717103efcaa)
 
 
 ## Project Structure
