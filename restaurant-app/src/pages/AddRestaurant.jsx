@@ -35,8 +35,7 @@ export default function AddRestaurant() {
         name: '',
         address: '',
         contact: '',
-        email: '',
-        description: ''
+        image: ''
     }
 
     const [restaurant, setRestaurant] = React.useState(initialState);
@@ -47,20 +46,20 @@ export default function AddRestaurant() {
 
     const [isDone, setIsDone] = React.useState(false);
 
-
     const dispatch = useDispatch()
 
 
     React.useEffect(() => {
         if (restaurantId) {
-            const data = restaurantsData.find((item) => +(item.id) === (+restaurantId));
+            console.log(restaurantsData);
+            const data = restaurantsData.find((item) => (+item.id) === (+restaurantId));
             setRestaurant(data)
         } else {
             setRestaurant(initialState)
         }
     }, [restaurantId])
 
-    const { name, address, contact, email, description } = restaurant;
+    const { name, address, contact, image } = restaurant;
 
 
     const handleSubmit = (event) => {
@@ -129,33 +128,23 @@ export default function AddRestaurant() {
                             margin="normal"
                             required
                             fullWidth
-                            label="Contact"
+                            label="Contact Number"
                             name="contact"
                             autoComplete="contact"
                             value={contact}
                             onChange={handleChange}
-                            type='number'
+                            
                         />
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            value={email}
+                            label="Restaurant Image"
+                            name="image"
+                            autoComplete="image"
+                            value={image}
                             onChange={handleChange}
-                            type='email'
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="description"
-                            label="Description"
-                            autoComplete="description"
-                            value={description}
-                            onChange={handleChange}
+                            type='url'
                         />
                         <Button
                             type="submit"
@@ -168,7 +157,6 @@ export default function AddRestaurant() {
 
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
 
         </ThemeProvider>

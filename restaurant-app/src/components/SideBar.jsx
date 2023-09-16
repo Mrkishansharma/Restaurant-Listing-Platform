@@ -231,7 +231,7 @@ export default function SideBar() {
                             key={index}
                             style={({ isActive }) => {
                                 return isActive ? Activestyle : defaultstyle
-                            }
+                                }
                             }
                         >
                             <ListItem disablePadding sx={{ display: 'block' }}>

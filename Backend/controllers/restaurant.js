@@ -36,7 +36,7 @@ const getRestaurant = async (req, res) => {
 
         }
 
-        const totalCount = await Restaurant.count(filterObject.where);
+        const totalCount = await Restaurant.count({ where: filterObject.where });
 
         res.append('X-Total-Count', totalCount);
         res.append('Access-Control-Expose-Headers', 'X-Total-Count');
