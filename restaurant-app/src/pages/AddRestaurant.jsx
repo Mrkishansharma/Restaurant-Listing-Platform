@@ -8,20 +8,21 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRestaurant, postRestaurant, updateRestaurant } from '../redux/Restaurant/action';
-import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import UserSelect from '../components/UserSelect';
 
 
 
 const defaultTheme = createTheme();
 
-export default function AddRestaurant({ goToStepZero,selectedRestaurentId: restaurantId }) {
+export default function AddRestaurant({ goToStepZero, selectedRestaurentId: restaurantId }) {
 
     const initialState = {
         name: '',
         address: '',
         contact: '',
-        image: ''
+        image: '',
+        added_by: ''
     }
 
     const [restaurant, setRestaurant] = React.useState(initialState);
@@ -32,7 +33,6 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
 
     const dispatch = useDispatch()
 
-    const navigate = useNavigate()
 
 
     React.useEffect(() => {
@@ -47,10 +47,14 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
 
     const handleDeleteRestaurant = () => {
         dispatch(deleteRestaurant(restaurantId))
-        goToStepZero()
+        setIsDone(true)
+        setTimeout(() => {
+            setIsDone(false)
+            goToStepZero()
+        }, 3000)
     }
 
-    const { name, address, contact, image } = restaurant;
+    const { name, address, contact, image, added_by } = restaurant;
 
 
     const handleSubmit = (event) => {
@@ -94,6 +98,7 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
                         {restaurantId ? "Update Existing Restaurant" : "Add New Restaurant"}
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+
                         <TextField
                             margin="normal"
                             required
@@ -105,6 +110,10 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
                             onChange={handleChange}
                             autoFocus
                         />
+
+
+
+
                         <TextField
                             margin="normal"
                             required
@@ -137,6 +146,9 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
                             onChange={handleChange}
                             type='url'
                         />
+
+                        <UserSelect added_by={added_by} handleChange={handleChange} restaurantId={restaurantId} />
+                        
                         <Button
                             type="submit"
                             fullWidth
@@ -148,11 +160,11 @@ export default function AddRestaurant({ goToStepZero,selectedRestaurentId: resta
 
                     </Box>
                     {
-                        restaurantId && 
+                        restaurantId &&
                         <Box>
                             <Button
                                 fullWidth
-                                variant="outlined" 
+                                variant="outlined"
                                 color="error"
                                 sx={{ mt: 3, mb: 2 }}
                                 onClick={handleDeleteRestaurant}

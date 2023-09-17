@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Restaurant from '../pages/Restaurant'
 import AddRestaurant from '../pages/AddRestaurant'
 import EditRestaurant from '../pages/EditRestaurant'
+import AddUser from '../pages/AddUser'
 
 function AllRouters() {
     return (
@@ -14,6 +15,7 @@ function AllRouters() {
                 <Route path='/restaurant' element={<Restaurant />} />
                 <Route path='/add-restaurant' element={<AddRestaurant />} />
                 <Route path='/edit-restaurant' element={<EditRestaurant />} />
+                <Route path='/add-user' element={<AddUser />} />
             </Routes>
         </>
     )

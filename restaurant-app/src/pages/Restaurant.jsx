@@ -6,7 +6,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRestaurant } from '../redux/Restaurant/action';
 
-import { TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import ShowRestaurant from '../components/ShowRestaurant';
 
 
@@ -20,9 +21,12 @@ export default function Restaurant() {
   const dispatch = useDispatch()
 
   const restaurants = (useSelector((state) => state.restaurant.restaurant)) || [];
-  const totalCount = useSelector((state) => state.restaurant.totalCount); 
+  const isLoading = useSelector((state) => state.restaurant.isLoading);
+  const totalCount = useSelector((state) => state.restaurant.totalCount);
 
-
+  console.log('***************************');
+  console.log(restaurants);
+  console.log('***************************');
 
   React.useEffect(() => {
     const params = new URLSearchParams();
@@ -72,8 +76,19 @@ export default function Restaurant() {
           />
         </Box>
       </Box>
+      {
+        isLoading ?
+          <Stack
+            sx={{ color: 'grey.500', margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', pt:10 }}
+            spacing={2}
+            direction="row"
+          >
+            <CircularProgress />
+          </Stack> :
+          <ShowRestaurant restaurants={restaurants} totalCount={totalCount} limit={limit} page={page} handlePageChange={handlePageChange} />
+      }
 
-      <ShowRestaurant restaurants={restaurants} totalCount={totalCount} limit={limit} page={page} handlePageChange={handlePageChange} />
+
     </>
   );
 }
