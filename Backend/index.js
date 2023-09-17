@@ -8,6 +8,7 @@ const app = express();
 
 const db = require('./models/index');
 const restaurantRouter = require('./routes/restaurant.route');
+const userRouter = require('./routes/user.route');
 
 const PORT = process.env.PORT || 8080;
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/restaurant', restaurantRouter);
+
+app.use('/api/v1/user', userRouter);
 
 app.all('*', (req, res) => {
     res.status(404).send({

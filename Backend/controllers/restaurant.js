@@ -1,47 +1,52 @@
 
 const { Op } = require('sequelize');
 
-const { Restaurant } = require('../models/index');
+const { Restaurant, User } = require('../models/index');
+
+
+const getFilterObject = (search, limit, page) => {
+    let filterObject = {};
+
+    let filterBySearch = {};
+    if (search) {
+        filterBySearch = {
+            [Op.or]: [
+                { name: { [Op.like]: `%${search}%` } },
+                { address: { [Op.like]: `%${search}%` } },
+                { contact: { [Op.like]: `%${search}%` } }
+            ],
+        };
+    }
+
+    filterObject.where = filterBySearch;
+
+    if (page && limit) {
+        const offset = (page - 1) * limit;
+        filterObject.offset = offset;
+        filterObject.limit = parseInt(limit);
+    } else if (limit) {
+        filterObject.limit = parseInt(limit);
+    }
+
+    return filterObject
+}
 
 const getRestaurant = async (req, res) => {
     const { search, limit, page } = req.query;
 
-
     try {
-        let filterObject = {};
 
-        let filterBySearch = {};
-        if (search) {
-            filterBySearch = {
-                [Op.or]: [
-                    { name: { [Op.like]: `%${search}%` } },
-                    { address: { [Op.like]: `%${search}%` } },
-                    { contact: { [Op.like]: `%${search}%` } }
-                ],
-            };
-        }
-
-        filterObject.where = filterBySearch;
-
-        if (page && limit) {
-
-            const offset = (page - 1) * limit;
-
-            filterObject.offset = offset;
-            filterObject.limit = parseInt(limit);
-
-        } else if (limit) {
-
-            filterObject.limit = parseInt(limit);
-
-        }
+        const filterObject = getFilterObject(search, limit, page);
 
         const totalCount = await Restaurant.count({ where: filterObject.where });
 
         res.append('X-Total-Count', totalCount);
         res.append('Access-Control-Expose-Headers', 'X-Total-Count');
 
-        const restaurants = await Restaurant.findAll(filterObject);
+        User.hasMany(Restaurant, { foreignKey: "added_by" });
+        Restaurant.belongsTo(User, { foreignKey: "added_by" });
+
+        const restaurants = await Restaurant.findAll({ ...filterObject, include: [User] });
 
         res.status(200).json(restaurants);
 
